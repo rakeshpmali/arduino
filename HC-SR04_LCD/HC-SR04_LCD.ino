@@ -47,17 +47,23 @@
 
       if (distanceCm >= maxRange || distanceCm <= minRange)
       {
-         distanceCm = -1;
-         digitalWrite(LEDPin, HIGH); 
+        distanceCm = -1;
+        digitalWrite(LEDPin, HIGH);
+      } else {
+        digitalWrite(LEDPin, LOW);
       }
-      
-      lcd.setCursor(0,0); // Sets the location at which subsequent text written to the LCD will be displayed
-      lcd.print("Dist: "); // Prints string "Distance" on the LCD
-      lcd.print(distanceCm); // Prints the distance value from the sensor
-      lcd.print(" cm");
-      Serial.println(distanceCm);
-      delay(800);
-  
+
       lcd.clear(); // Clears the display 
-     
+      lcd.print("Dist: "); // Prints string "Distance" on the LCD
+      if (distanceCm != -1)
+      {
+        lcd.print(distanceCm); // Prints the distance value from the sensor
+        lcd.print(" cm");
+      } else {
+        lcd.print("Error");
+        lcd.setCursor(0,1);
+        lcd.print("--Out Of Range--");
+      }
+      Serial.println(distanceCm);
+      delay(600);   
     }
